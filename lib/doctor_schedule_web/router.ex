@@ -10,8 +10,10 @@ defmodule DoctorScheduleWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
-    plug :accepts, ["json"]
+  scope "/api", DoctorScheduleWeb do
+    pipe_through :browser
+
+    resources "/users", UserController
   end
 
   scope "/", DoctorScheduleWeb do
