@@ -75,7 +75,6 @@ jobs:
         run: mix deps.get
       - name: coveralls
         run: mix coveralls.json
-      - uses: codecov/codecov-action@v1
     services:
       pg:
         image: postgres:12
