@@ -2,7 +2,7 @@ defmodule DoctorScheduleWeb.Router do
   use DoctorScheduleWeb, :router
 
   pipeline :browser do
-    plug :accepts, ["html"]
+    plug :accepts, ["html", "json"]
     plug :fetch_session
     plug :fetch_live_flash
     plug :put_root_layout, {DoctorScheduleWeb.LayoutView, :root}
@@ -17,7 +17,13 @@ defmodule DoctorScheduleWeb.Router do
   scope "/", DoctorScheduleWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", PageLive, :index
+  end
+
+  scope "/api", DoctorScheduleWeb.Api, as: :api do
+    pipe_through :api
+
+    resources "/users", UserController
   end
 
   # Other scopes may use custom stacks.
