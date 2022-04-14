@@ -20,18 +20,25 @@ defmodule DoctorSchedule.Accounts.Entities.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:email, :first_name, :last_name, :role, :password, :password_confirmation])
-    |> validate_required([
-      :email,
-      :first_name,
-      :last_name,
-      :role,
-      :password,
-      :password_confirmation
-    ], message: "Required field can't be blank")
+    |> validate_required(
+      [
+        :email,
+        :first_name,
+        :last_name,
+        :role,
+        :password,
+        :password_confirmation
+      ],
+      message: "Required field can't be blank"
+    )
     |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/, message: "Invalid format: please provide a valid e-mail")
     |> update_change(:email, &String.downcase/1)
-    |> validate_length(:password, min: 6, max: 100, message: "Password should have between 6 to 100 characters")
+    |> validate_length(:password,
+      min: 6,
+      max: 100,
+      message: "Password should have between 6 to 100 characters"
+    )
     |> validate_confirmation(:password)
     |> hash_password()
   end
