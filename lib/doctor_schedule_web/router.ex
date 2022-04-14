@@ -14,16 +14,16 @@ defmodule DoctorScheduleWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", DoctorScheduleWeb do
-    pipe_through :api
-
-    resources "/users", UserController
-  end
-
   scope "/", DoctorScheduleWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", PageLive, :index
+  end
+
+  scope "/api", DoctorScheduleWeb.Api, as: :api do
+    pipe_through :api
+
+    resources "/users", UserController
   end
 
   # Other scopes may use custom stacks.

@@ -21,7 +21,13 @@ defmodule DoctorSchedule.Accounts.Repositories.AccountRepositoryTest do
     end
 
     test "create_user/1 with valid data creates a user" do
-      valid_attrs = %{email: "some@email", first_name: "some first_name", last_name: "some last_name", password: "123123", password_confirmation: "123123"}
+      valid_attrs = %{
+        email: "some@email",
+        first_name: "some first_name",
+        last_name: "some last_name",
+        password: "123123",
+        password_confirmation: "123123"
+      }
 
       assert {:ok, %User{} = user} = AccountRepository.create_user(valid_attrs)
       assert user.email == "some@email"
@@ -39,7 +45,14 @@ defmodule DoctorSchedule.Accounts.Repositories.AccountRepositoryTest do
 
     test "update_user/2 with valid data updates the user" do
       user = user_fixture()
-      update_attrs = %{email: "some_updated@email", first_name: "some updated first_name", last_name: "some updated last_name", password: "some updated password", password_confirmation: "some updated password"}
+
+      update_attrs = %{
+        email: "some_updated@email",
+        first_name: "some updated first_name",
+        last_name: "some updated last_name",
+        password: "some updated password",
+        password_confirmation: "some updated password"
+      }
 
       assert {:ok, %User{} = user} = AccountRepository.update_user(user, update_attrs)
       assert user.email == "some_updated@email"
