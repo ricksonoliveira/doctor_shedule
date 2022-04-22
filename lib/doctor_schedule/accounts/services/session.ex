@@ -3,7 +3,7 @@ defmodule DoctorSchedule.Accounts.Services.Session do
   alias DoctorSchedule.Repo
 
   def authenticate(email, password) do
-    case Repo.get_by!(User, email: email) do
+    case Repo.get_by(User, email: email) do
       nil ->
         {:error, :not_found}
       user ->
