@@ -75,6 +75,8 @@ jobs:
         run: mix deps.get
       - name: coveralls
         run: mix coveralls.json
+        env:
+          GUARDIAN_SECRET: ${{ secrets.GUARDIAN_SECRET }}
     services:
       pg:
         image: postgres:12
