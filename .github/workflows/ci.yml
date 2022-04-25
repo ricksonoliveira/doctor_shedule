@@ -77,7 +77,7 @@ jobs:
         run: mix coveralls.json
       - uses: ueberauth/guardian-action@v1
         with:
-          token: ${{ secrets.GUARDIAN_SECRET }}
+          GUARDIAN_SECRET: ${{ secrets.GUARDIAN_SECRET }}
     services:
       pg:
         image: postgres:12
