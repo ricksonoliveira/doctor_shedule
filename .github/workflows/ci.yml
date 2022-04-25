@@ -75,7 +75,7 @@ jobs:
         run: mix deps.get
       - name: coveralls
         run: mix coveralls.json
-      - uses: guardian/guardian-action@v1
+      - uses: ueberauth/guardian-action@v1
         with:
           token: ${{ secrets.GUARDIAN_SECRET }}
     services:
