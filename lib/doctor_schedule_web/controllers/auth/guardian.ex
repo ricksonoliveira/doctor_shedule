@@ -12,6 +12,7 @@ defmodule DoctorScheduleWeb.Auth.Guardian do
     case Session.authenticate(email, password) do
       {:ok, user} ->
         create_token(user)
+
       _ ->
         {:error, :unauthorized}
     end

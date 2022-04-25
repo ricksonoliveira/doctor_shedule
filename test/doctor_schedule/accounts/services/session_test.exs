@@ -5,7 +5,6 @@ defmodule DoctorSchedule.Accounts.Services.SessionTest do
 
   import DoctorSchedule.AccountsFixtures
 
-
   test "authenticate/2 should return user" do
     user_fixture()
     {:ok, user_authenticated} = Session.authenticate("some@email", "123123")

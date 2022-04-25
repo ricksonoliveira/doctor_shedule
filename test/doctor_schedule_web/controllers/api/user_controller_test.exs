@@ -22,7 +22,9 @@ defmodule DoctorScheduleWeb.Api.UserControllerTest do
         password_confirmation: "some password"
       }
       |> AccountRepository.create_user()
+
     {:ok, token, _} = encode_and_sign(user, %{}, token_type: :access)
+
     conn =
       conn
       |> put_req_header("accept", "application/json")
@@ -36,6 +38,7 @@ defmodule DoctorScheduleWeb.Api.UserControllerTest do
       conn =
         conn
         |> get(Routes.api_user_path(conn, :index))
+
       assert json_response(conn, 200) |> Enum.count() == 1
     end
   end

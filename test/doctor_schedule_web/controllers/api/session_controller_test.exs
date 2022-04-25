@@ -40,6 +40,7 @@ defmodule DoctorScheduleWeb.Api.SessionControllerTest do
           email: "auth@email",
           password: "some password"
         })
+
       assert json_response(conn, 201)["user"]["email"] == "auth@email"
     end
 
