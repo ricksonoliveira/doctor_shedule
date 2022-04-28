@@ -15,6 +15,7 @@ defmodule DoctorScheduleWeb.Api.PasswordForgotControllerTest do
 
   test "should send email to forgotten password", %{conn: conn} do
     {:ok, user} = AccountRepository.create_user(valid_user())
+
     conn =
       conn
       |> post(Routes.api_password_forgot_path(conn, :create), email: user.email)
