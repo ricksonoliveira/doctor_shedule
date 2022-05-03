@@ -9,6 +9,7 @@ defmodule DoctorSchedule.Accounts.Services.ResetPasswordService do
     |> case do
       nil ->
         {:error, "Token does not exists!"}
+
       user_token ->
         user_token
         |> validate_token()
@@ -18,9 +19,10 @@ defmodule DoctorSchedule.Accounts.Services.ResetPasswordService do
             |> AccountRepository.update_user(data)
 
             {:ok, "Password has been updated!"}
+
           false ->
             {:error, "Token has expired!"}
-      end
+        end
     end
   end
 
