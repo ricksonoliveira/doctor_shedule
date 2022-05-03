@@ -7,7 +7,7 @@ defmodule DoctorSchedule.Accounts.Services.ResetPasswordServiceTest do
   import DoctorSchedule.AccountsFixtures
   import Mock
 
-  test "authenticate/2 should return user" do
+  test "execute/2 should update password" do
     user = user_fixture()
     {:ok, token, _} = TokenRepository.generate(user.email)
 
