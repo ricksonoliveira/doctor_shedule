@@ -20,6 +20,9 @@ config :doctor_schedule, DoctorScheduleWeb.Endpoint,
   secret_key_base: "C3oMcZgOiP588hh0RwSNTRUY0cKNlg0faMIt9sUus1LS4vMoK0clq7R6B20qQTEr",
   server: false
 
+config :doctor_schedule, DoctorSchedule.Shared.MailProvider.Mailer,
+  adapter: Bamboo.TestAdapter
+
 # In test we don't send emails.
 config :doctor_schedule, DoctorSchedule.Mailer, adapter: Swoosh.Adapters.Test
 
