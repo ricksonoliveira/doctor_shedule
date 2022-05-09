@@ -31,6 +31,8 @@ defmodule DoctorScheduleWeb.Router do
     post "/password/forgot", PasswordForgotController, :create
     resources "/sessions", SessionController
     resources "/users", UserController, only: [:create]
+
+    resources "/appoiontments", AppoitmentController
   end
 
   scope "/api", DoctorScheduleWeb.Api, as: :api do
