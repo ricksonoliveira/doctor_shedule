@@ -1,4 +1,4 @@
-defmodule DoctorSchedule.Appointments.Appoitment do
+defmodule DoctorSchedule.Appointments.Appointment do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -6,7 +6,7 @@ defmodule DoctorSchedule.Appointments.Appoitment do
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @derive {Phoenix.Param, key: :id}
-  schema "appoiontments" do
+  schema "appointments" do
     field :date, :naive_datetime
 
     belongs_to :user, User, foreign_key: :user_id, type: :binary_id
@@ -16,8 +16,8 @@ defmodule DoctorSchedule.Appointments.Appoitment do
   end
 
   @doc false
-  def changeset(appoitment, attrs) do
-    appoitment
+  def changeset(appointment, attrs) do
+    appointment
     |> cast(attrs, [:date, :user_id, :provider_id])
     |> validate_required([:date, :user_id, :provider_id])
   end

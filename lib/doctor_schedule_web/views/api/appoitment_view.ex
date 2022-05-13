@@ -1,19 +1,19 @@
-defmodule DoctorScheduleWeb.Api.AppoitmentView do
+defmodule DoctorScheduleWeb.Api.AppointmentView do
   use DoctorScheduleWeb, :view
-  alias DoctorScheduleWeb.Api.AppoitmentView
+  alias DoctorScheduleWeb.Api.AppointmentView
 
-  def render("index.json", %{appoiontments: appoiontments}) do
-    render_many(appoiontments, AppoitmentView, "appoitment.json")
+  def render("index.json", %{appointments: appointments}) do
+    render_many(appointments, AppointmentView, "appointment.json")
   end
 
-  def render("show.json", %{appoitment: appoitment}) do
-    render_one(appoitment, AppoitmentView, "appoitment.json")
+  def render("show.json", %{appointment: appointment}) do
+    render_one(appointment, AppointmentView, "appointment.json")
   end
 
-  def render("appoitment.json", %{appoitment: appoitment}) do
+  def render("appointment.json", %{appointment: appointment}) do
     %{
-      id: appoitment.id,
-      date: appoitment.date
+      id: appointment.id,
+      date: appointment.date
     }
   end
 end

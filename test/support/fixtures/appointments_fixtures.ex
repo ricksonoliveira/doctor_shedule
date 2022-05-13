@@ -5,16 +5,16 @@ defmodule DoctorSchedule.AppointmentsFixtures do
   """
 
   @doc """
-  Generate a appoitment.
+  Generate a appointment.
   """
-  def appoitment_fixture(attrs \\ %{}) do
-    {:ok, appoitment} =
+  def appointment_fixture(attrs \\ %{}) do
+    {:ok, appointment} =
       attrs
       |> Enum.into(%{
         date: ~N[2022-05-08 16:23:00]
       })
-      |> DoctorSchedule.Appointments.create_appoitment()
+      |> DoctorSchedule.Appointments.create_appointment()
 
-    appoitment
+    appointment
   end
 end

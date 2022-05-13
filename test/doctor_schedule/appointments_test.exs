@@ -3,62 +3,62 @@ defmodule DoctorSchedule.AppointmentsTest do
 
   alias DoctorSchedule.Appointments
 
-  describe "appoiontments" do
-    alias DoctorSchedule.Appointments.Appoitment
+  describe "appointments" do
+    alias DoctorSchedule.Appointments.Appointment
 
     import DoctorSchedule.AppointmentsFixtures
 
     @invalid_attrs %{date: nil}
 
-    test "list_appoiontments/0 returns all appoiontments" do
-      appoitment = appoitment_fixture()
-      assert Appointments.list_appoiontments() == [appoitment]
+    test "list_appointments/0 returns all appointments" do
+      appointment = appointment_fixture()
+      assert Appointments.list_appointments() == [appointment]
     end
 
-    test "get_appoitment!/1 returns the appoitment with given id" do
-      appoitment = appoitment_fixture()
-      assert Appointments.get_appoitment!(appoitment.id) == appoitment
+    test "get_appointment!/1 returns the appointment with given id" do
+      appointment = appointment_fixture()
+      assert Appointments.get_appointment!(appointment.id) == appointment
     end
 
-    test "create_appoitment/1 with valid data creates a appoitment" do
+    test "create_appointment/1 with valid data creates a appointment" do
       valid_attrs = %{date: ~N[2022-05-08 16:23:00]}
 
-      assert {:ok, %Appoitment{} = appoitment} = Appointments.create_appoitment(valid_attrs)
-      assert appoitment.date == ~N[2022-05-08 16:23:00]
+      assert {:ok, %Appointment{} = appointment} = Appointments.create_appointment(valid_attrs)
+      assert appointment.date == ~N[2022-05-08 16:23:00]
     end
 
-    test "create_appoitment/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Appointments.create_appoitment(@invalid_attrs)
+    test "create_appointment/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Appointments.create_appointment(@invalid_attrs)
     end
 
-    test "update_appoitment/2 with valid data updates the appoitment" do
-      appoitment = appoitment_fixture()
+    test "update_appointment/2 with valid data updates the appointment" do
+      appointment = appointment_fixture()
       update_attrs = %{date: ~N[2022-05-09 16:23:00]}
 
-      assert {:ok, %Appoitment{} = appoitment} =
-               Appointments.update_appoitment(appoitment, update_attrs)
+      assert {:ok, %Appointment{} = appointment} =
+               Appointments.update_appointment(appointment, update_attrs)
 
-      assert appoitment.date == ~N[2022-05-09 16:23:00]
+      assert appointment.date == ~N[2022-05-09 16:23:00]
     end
 
-    test "update_appoitment/2 with invalid data returns error changeset" do
-      appoitment = appoitment_fixture()
+    test "update_appointment/2 with invalid data returns error changeset" do
+      appointment = appointment_fixture()
 
       assert {:error, %Ecto.Changeset{}} =
-               Appointments.update_appoitment(appoitment, @invalid_attrs)
+               Appointments.update_appointment(appointment, @invalid_attrs)
 
-      assert appoitment == Appointments.get_appoitment!(appoitment.id)
+      assert appointment == Appointments.get_appointment!(appointment.id)
     end
 
-    test "delete_appoitment/1 deletes the appoitment" do
-      appoitment = appoitment_fixture()
-      assert {:ok, %Appoitment{}} = Appointments.delete_appoitment(appoitment)
-      assert_raise Ecto.NoResultsError, fn -> Appointments.get_appoitment!(appoitment.id) end
+    test "delete_appointment/1 deletes the appointment" do
+      appointment = appointment_fixture()
+      assert {:ok, %Appointment{}} = Appointments.delete_appointment(appointment)
+      assert_raise Ecto.NoResultsError, fn -> Appointments.get_appointment!(appointment.id) end
     end
 
-    test "change_appoitment/1 returns a appoitment changeset" do
-      appoitment = appoitment_fixture()
-      assert %Ecto.Changeset{} = Appointments.change_appoitment(appoitment)
+    test "change_appointment/1 returns a appointment changeset" do
+      appointment = appointment_fixture()
+      assert %Ecto.Changeset{} = Appointments.change_appointment(appointment)
     end
   end
 end

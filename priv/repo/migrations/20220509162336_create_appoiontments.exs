@@ -2,7 +2,7 @@ defmodule DoctorSchedule.Repo.Migrations.CreateAppoiontments do
   use Ecto.Migration
 
   def change do
-    create table(:appoiontments, primary_key: false) do
+    create table(:appointments, primary_key: false) do
       add :id, :uuid, primary_key: true
       add :date, :naive_datetime
 
@@ -15,7 +15,7 @@ defmodule DoctorSchedule.Repo.Migrations.CreateAppoiontments do
       timestamps()
     end
 
-    create index(:appoiontments, [:user_id])
-    create index(:appoiontments, [:provider_id])
+    create index(:appointments, [:user_id])
+    create index(:appointments, [:provider_id])
   end
 end

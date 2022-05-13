@@ -6,99 +6,99 @@ defmodule DoctorSchedule.Appointments do
   import Ecto.Query, warn: false
   alias DoctorSchedule.Repo
 
-  alias DoctorSchedule.Appointments.Appoitment
+  alias DoctorSchedule.Appointments.Appointment
 
   @doc """
-  Returns the list of appoiontments.
+  Returns the list of appointments.
 
   ## Examples
 
-      iex> list_appoiontments()
-      [%Appoitment{}, ...]
+      iex> list_appointments()
+      [%Appointment{}, ...]
 
   """
-  def list_appoiontments do
-    Repo.all(Appoitment)
+  def list_appointments do
+    Repo.all(Appointment)
   end
 
   @doc """
-  Gets a single appoitment.
+  Gets a single appointment.
 
-  Raises `Ecto.NoResultsError` if the Appoitment does not exist.
+  Raises `Ecto.NoResultsError` if the Appointment does not exist.
 
   ## Examples
 
-      iex> get_appoitment!(123)
-      %Appoitment{}
+      iex> get_appointment!(123)
+      %Appointment{}
 
-      iex> get_appoitment!(456)
+      iex> get_appointment!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_appoitment!(id), do: Repo.get!(Appoitment, id)
+  def get_appointment!(id), do: Repo.get!(Appointment, id)
 
   @doc """
-  Creates a appoitment.
+  Creates a appointment.
 
   ## Examples
 
-      iex> create_appoitment(%{field: value})
-      {:ok, %Appoitment{}}
+      iex> create_appointment(%{field: value})
+      {:ok, %Appointment{}}
 
-      iex> create_appoitment(%{field: bad_value})
+      iex> create_appointment(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_appoitment(attrs \\ %{}) do
-    %Appoitment{}
-    |> Appoitment.changeset(attrs)
+  def create_appointment(attrs \\ %{}) do
+    %Appointment{}
+    |> Appointment.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a appoitment.
+  Updates a appointment.
 
   ## Examples
 
-      iex> update_appoitment(appoitment, %{field: new_value})
-      {:ok, %Appoitment{}}
+      iex> update_appointment(appointment, %{field: new_value})
+      {:ok, %Appointment{}}
 
-      iex> update_appoitment(appoitment, %{field: bad_value})
+      iex> update_appointment(appointment, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_appoitment(%Appoitment{} = appoitment, attrs) do
-    appoitment
-    |> Appoitment.changeset(attrs)
+  def update_appointment(%Appointment{} = appointment, attrs) do
+    appointment
+    |> Appointment.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a appoitment.
+  Deletes a appointment.
 
   ## Examples
 
-      iex> delete_appoitment(appoitment)
-      {:ok, %Appoitment{}}
+      iex> delete_appointment(appointment)
+      {:ok, %Appointment{}}
 
-      iex> delete_appoitment(appoitment)
+      iex> delete_appointment(appointment)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_appoitment(%Appoitment{} = appoitment) do
-    Repo.delete(appoitment)
+  def delete_appointment(%Appointment{} = appointment) do
+    Repo.delete(appointment)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking appoitment changes.
+  Returns an `%Ecto.Changeset{}` for tracking appointment changes.
 
   ## Examples
 
-      iex> change_appoitment(appoitment)
-      %Ecto.Changeset{data: %Appoitment{}}
+      iex> change_appointment(appointment)
+      %Ecto.Changeset{data: %Appointment{}}
 
   """
-  def change_appoitment(%Appoitment{} = appoitment, attrs \\ %{}) do
-    Appoitment.changeset(appoitment, attrs)
+  def change_appointment(%Appointment{} = appointment, attrs \\ %{}) do
+    Appointment.changeset(appointment, attrs)
   end
 end
