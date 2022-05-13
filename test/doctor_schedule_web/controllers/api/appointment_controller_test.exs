@@ -51,7 +51,9 @@ defmodule DoctorScheduleWeb.Api.AppointmentControllerTest do
       appointment: %Appointment{id: id} = appointment
     } do
       conn =
-        put(conn, Routes.api_appointment_path(conn, :update, appointment), appointment: @update_attrs)
+        put(conn, Routes.api_appointment_path(conn, :update, appointment),
+          appointment: @update_attrs
+        )
 
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
