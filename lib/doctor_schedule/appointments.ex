@@ -8,6 +8,10 @@ defmodule DoctorSchedule.Appointments do
 
   alias DoctorSchedule.Appointments.Appointment
 
+
+  def find_by_appointment_date_and_provider(date, provider_id), do:
+    Repo.get_by(Appointment, date: date, provider_id: provider_id) |> IO.inspect()
+
   @doc """
   Returns the list of appointments.
 

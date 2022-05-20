@@ -19,9 +19,22 @@ defmodule DoctorSchedule.Appointments.Services.CreateAppointment do
       provider_id == user_id ->
         {:error, "Cannot create an appointment with same provider and user ids."}
 
+      book_time?(date) ->
+        {:error, "Bookings can only be made between 8am and 19pm."}
+
+      Appointments.find_by_appointment_date_and_provider(date, provider_id) != nil ->
+        {:error, "This appointment is already booked."}
+
       true ->
-        Appointments.create_appointment(appointment)
+        appointment
+        |> Map.put("date", date)
+        |> Appointments.create_appointment()
     end
+  end
+
+  defp book_time?(date) do
+    hour = date.hour
+    hour < 8 or hour > 19
   end
 
   defp is_before?(date) do
