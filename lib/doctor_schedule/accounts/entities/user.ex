@@ -2,6 +2,9 @@ defmodule DoctorSchedule.Accounts.Entities.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias DoctorSchedule.Accounts.Entities.UserToken
+  alias DoctorSchedule.Appointments.Appointment
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @derive {Phoenix.Param, key: :id}
   schema "users" do
@@ -12,6 +15,9 @@ defmodule DoctorSchedule.Accounts.Entities.User do
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
     field :role, :string, default: "user"
+
+    has_many :appointments, Appointment
+    has_many :user_tokens, UserToken
 
     timestamps()
   end
