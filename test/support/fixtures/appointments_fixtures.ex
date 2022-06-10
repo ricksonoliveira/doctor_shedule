@@ -1,5 +1,6 @@
 defmodule DoctorSchedule.AppointmentsFixtures do
   alias DoctorSchedule.Accounts.Repositories.AccountRepository
+  alias DoctorSchedule.Appointments.Repositories.AppointmentRepository
   alias DoctorSchedule.UserFixtures
 
   @moduledoc """
@@ -21,7 +22,7 @@ defmodule DoctorSchedule.AppointmentsFixtures do
         provider_id: provider.id,
         user_id: user.id
       })
-      |> DoctorSchedule.Appointments.create_appointment()
+      |> AppointmentRepository.create_appointment()
 
     appointment
   end

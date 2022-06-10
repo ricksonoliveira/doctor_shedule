@@ -1,4 +1,4 @@
-defmodule DoctorSchedule.Appointments do
+defmodule DoctorSchedule.Appointments.Repositories.AppointmentRepository do
   @moduledoc """
   The Appointments context.
   """
@@ -6,7 +6,7 @@ defmodule DoctorSchedule.Appointments do
   import Ecto.Query, warn: false
   alias DoctorSchedule.Repo
 
-  alias DoctorSchedule.Appointments.Appointment
+  alias DoctorSchedule.Appointments.Entities.Appointment
 
   def find_by_appointment_date_and_provider(date, provider_id),
     do: Repo.get_by(Appointment, date: date, provider_id: provider_id)

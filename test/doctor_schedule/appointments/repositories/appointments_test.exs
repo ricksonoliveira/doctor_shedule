@@ -1,11 +1,11 @@
-defmodule DoctorSchedule.AppointmentsTest do
+defmodule DoctorSchedule.Appointments.Repositories.AppointmentsTest do
   use DoctorSchedule.DataCase
 
-  alias DoctorSchedule.Appointments
+  alias DoctorSchedule.Appointments.Entities.Appointment
 
   describe "appointments" do
     alias DoctorSchedule.Accounts.Repositories.AccountRepository
-    alias DoctorSchedule.Appointments.Appointment
+    alias DoctorSchedule.Appointments.Repositories.AppointmentRepository
 
     import DoctorSchedule.AppointmentsFixtures
     import DoctorSchedule.UserFixtures
@@ -14,12 +14,12 @@ defmodule DoctorSchedule.AppointmentsTest do
 
     test "list_appointments/0 returns all appointments" do
       appointment = appointment_fixture()
-      assert Appointments.list_appointments() == [appointment]
+      assert AppointmentRepository.list_appointments() == [appointment]
     end
 
     test "get_appointment!/1 returns the appointment with given id" do
       appointment = appointment_fixture()
-      assert Appointments.get_appointment!(appointment.id) == appointment
+      assert AppointmentRepository.get_appointment!(appointment.id) == appointment
     end
 
     test "create_appointment/1 with valid data creates a appointment" do
@@ -32,12 +32,15 @@ defmodule DoctorSchedule.AppointmentsTest do
         provider_id: provider.id
       }
 
-      assert {:ok, %Appointment{} = appointment} = Appointments.create_appointment(valid_attrs)
+      assert {:ok, %Appointment{} = appointment} =
+               AppointmentRepository.create_appointment(valid_attrs)
+
       assert appointment.date == ~N[2022-05-08 16:23:00]
     end
 
     test "create_appointment/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Appointments.create_appointment(@invalid_attrs)
+      assert {:error, %Ecto.Changeset{}} =
+               AppointmentRepository.create_appointment(@invalid_attrs)
     end
 
     test "update_appointment/2 with valid data updates the appointment" do
@@ -45,7 +48,7 @@ defmodule DoctorSchedule.AppointmentsTest do
       update_attrs = %{date: ~N[2022-05-09 16:23:00]}
 
       assert {:ok, %Appointment{} = appointment} =
-               Appointments.update_appointment(appointment, update_attrs)
+               AppointmentRepository.update_appointment(appointment, update_attrs)
 
       assert appointment.date == ~N[2022-05-09 16:23:00]
     end
@@ -54,20 +57,23 @@ defmodule DoctorSchedule.AppointmentsTest do
       appointment = appointment_fixture()
 
       assert {:error, %Ecto.Changeset{}} =
-               Appointments.update_appointment(appointment, @invalid_attrs)
+               AppointmentRepository.update_appointment(appointment, @invalid_attrs)
 
-      assert appointment == Appointments.get_appointment!(appointment.id)
+      assert appointment == AppointmentRepository.get_appointment!(appointment.id)
     end
 
     test "delete_appointment/1 deletes the appointment" do
       appointment = appointment_fixture()
-      assert {:ok, %Appointment{}} = Appointments.delete_appointment(appointment)
-      assert_raise Ecto.NoResultsError, fn -> Appointments.get_appointment!(appointment.id) end
+      assert {:ok, %Appointment{}} = AppointmentRepository.delete_appointment(appointment)
+
+      assert_raise Ecto.NoResultsError, fn ->
+        AppointmentRepository.get_appointment!(appointment.id)
+      end
     end
 
     test "change_appointment/1 returns a appointment changeset" do
       appointment = appointment_fixture()
-      assert %Ecto.Changeset{} = Appointments.change_appointment(appointment)
+      assert %Ecto.Changeset{} = AppointmentRepository.change_appointment(appointment)
     end
   end
 end
