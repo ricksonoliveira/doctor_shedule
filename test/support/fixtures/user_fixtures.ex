@@ -8,6 +8,15 @@ defmodule DoctorSchedule.UserFixtures do
       password_confirmation: "some password"
     }
 
+  def provider_user,
+    do: %{
+      email: "provider@email",
+      first_name: "provider first_name",
+      last_name: "provider last_name",
+      password: "provider password",
+      password_confirmation: "provider password"
+    }
+
   def update_user,
     do: %{
       email: "some-updated@email",

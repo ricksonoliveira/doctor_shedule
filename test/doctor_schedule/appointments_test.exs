@@ -4,9 +4,11 @@ defmodule DoctorSchedule.AppointmentsTest do
   alias DoctorSchedule.Appointments
 
   describe "appointments" do
+    alias DoctorSchedule.Accounts.Repositories.AccountRepository
     alias DoctorSchedule.Appointments.Appointment
 
     import DoctorSchedule.AppointmentsFixtures
+    import DoctorSchedule.UserFixtures
 
     @invalid_attrs %{date: nil}
 
@@ -21,7 +23,14 @@ defmodule DoctorSchedule.AppointmentsTest do
     end
 
     test "create_appointment/1 with valid data creates a appointment" do
-      valid_attrs = %{date: ~N[2022-05-08 16:23:00]}
+      {:ok, user} = AccountRepository.create_user(valid_user())
+      {:ok, provider} = AccountRepository.create_user(provider_user())
+
+      valid_attrs = %{
+        date: ~N[2022-05-08 16:23:00],
+        user_id: user.id,
+        provider_id: provider.id
+      }
 
       assert {:ok, %Appointment{} = appointment} = Appointments.create_appointment(valid_attrs)
       assert appointment.date == ~N[2022-05-08 16:23:00]
