@@ -1,5 +1,4 @@
 defmodule DoctorSchedule.AppointmentsFixtures do
-  alias DoctorSchedule.Accounts.Repositories.AccountRepository
   alias DoctorSchedule.Appointments.Repositories.AppointmentRepository
   alias DoctorSchedule.UserFixtures
 
@@ -11,17 +10,13 @@ defmodule DoctorSchedule.AppointmentsFixtures do
   @doc """
   Generate a appointment.
   """
-  def appointment_fixture(attrs \\ %{}) do
-    {:ok, user} = AccountRepository.create_user(UserFixtures.valid_user())
-    {:ok, provider} = AccountRepository.create_user(UserFixtures.provider_user())
-
+  def appointment_fixture(user_id \\ nil) do
     {:ok, appointment} =
-      attrs
-      |> Enum.into(%{
+      %{
         date: ~N[2022-05-08 16:23:00],
-        provider_id: provider.id,
-        user_id: user.id
-      })
+        provider_id: UserFixtures.create_provider().id,
+        user_id: user_id || UserFixtures.create_user().id
+      }
       |> AppointmentRepository.create_appointment()
 
     appointment

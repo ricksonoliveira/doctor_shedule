@@ -1,4 +1,6 @@
 defmodule DoctorSchedule.UserFixtures do
+  alias DoctorSchedule.Accounts.Repositories.AccountRepository
+
   def valid_user,
     do: %{
       email: "some@email",
@@ -28,4 +30,23 @@ defmodule DoctorSchedule.UserFixtures do
 
   def invalid_user,
     do: %{email: nil, first_name: nil, last_name: nil, password_hash: nil, role: nil}
+
+  def create_user do
+    {:ok, user} =
+      AccountRepository.create_user(%{
+        email: "auth@email",
+        first_name: "some first_name",
+        last_name: "some last_name",
+        password: "some password",
+        password_confirmation: "some password"
+      })
+
+    user
+  end
+
+  def create_provider do
+    {:ok, provider} = AccountRepository.create_user(provider_user())
+
+    provider
+  end
 end

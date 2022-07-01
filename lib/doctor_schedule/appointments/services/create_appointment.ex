@@ -1,5 +1,5 @@
 defmodule DoctorSchedule.Appointments.Services.CreateAppointment do
-  alias DoctorSchedule.Appointments
+  alias DoctorSchedule.Appointments.Repositories.AppointmentRepository
 
   def execute(appointment) do
     %{
@@ -22,13 +22,13 @@ defmodule DoctorSchedule.Appointments.Services.CreateAppointment do
       book_time?(date) ->
         {:error, "Bookings can only be made between 8am and 19pm."}
 
-      Appointments.find_by_appointment_date_and_provider(date, provider_id) != nil ->
+      AppointmentRepository.find_by_appointment_date_and_provider(date, provider_id) != nil ->
         {:error, "This appointment is already booked."}
 
       true ->
         appointment
         |> Map.put("date", date)
-        |> Appointments.create_appointment()
+        |> AppointmentRepository.create_appointment()
     end
   end
 
@@ -43,9 +43,9 @@ defmodule DoctorSchedule.Appointments.Services.CreateAppointment do
   end
 
   defp start_hour(date) do
-    date =
+    {:ok, date} =
       date
-      |> NaiveDateTime.from_iso8601!()
+      |> NaiveDateTime.from_iso8601()
 
     %NaiveDateTime{date | minute: 0, second: 0, microsecond: {0, 0}}
   end
