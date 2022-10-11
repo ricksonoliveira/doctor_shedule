@@ -16,7 +16,7 @@ defmodule DoctorScheduleWeb.Api.ResetPasswordControllerTest do
 
   test "should reset password", %{conn: conn} do
     {:ok, user} = AccountRepository.create_user(valid_user())
-    {:ok, _, token, _} = SendForgotPassword.execute(user.email)
+    {:ok, _, token} = SendForgotPassword.execute(user.email)
 
     conn =
       conn

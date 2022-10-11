@@ -11,8 +11,12 @@ defmodule DoctorSchedule.Accounts.Services.SendForgotPassword do
   def execute(email) do
     TokenRepository.generate(email)
     |> case do
-      {:error, msg} -> {:error, msg}
-      {:ok, token, user} -> {:ok, user, token, send_email(token, user)}
+      {:error, msg} ->
+        {:error, msg}
+
+      {:ok, token, user} ->
+        Task.async(fn -> send_email(token, user) end)
+        {:ok, user, token}
     end
   end
 
