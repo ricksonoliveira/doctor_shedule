@@ -1,5 +1,5 @@
 defmodule DoctorSchedule.Accounts.Services.SendForgotPasswordTest do
-  use DoctorSchedule.DataCase
+  use DoctorSchedule.DataCase, async: true
   use Bamboo.Test
 
   alias DoctorSchedule.Accounts.Services.SendForgotPassword

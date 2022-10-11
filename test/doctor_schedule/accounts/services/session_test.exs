@@ -1,5 +1,5 @@
 defmodule DoctorSchedule.Accounts.Services.SessionTest do
-  use DoctorSchedule.DataCase
+  use DoctorSchedule.DataCase, async: true
 
   alias DoctorSchedule.Accounts.Services.Session
 

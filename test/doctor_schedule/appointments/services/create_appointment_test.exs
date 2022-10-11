@@ -3,8 +3,8 @@ defmodule DoctorSchedule.Appointments.Services.CreateAppointmentTest do
 
   alias DoctorSchedule.{
     Appointments.Entities.Appointment,
-    Appointments.Services.CreateAppointment,
     Appointments.Repositories.AppointmentRepository,
+    Appointments.Services.CreateAppointment,
     UserFixtures
   }
 
@@ -95,11 +95,11 @@ defmodule DoctorSchedule.Appointments.Services.CreateAppointmentTest do
     user = UserFixtures.create_user()
 
     assert {:ok, %Appointment{} = appointment} =
-              CreateAppointment.execute(%{
-                "date" => date,
-                "provider_id" => provider.id,
-                "user_id" => user.id
-              })
+             CreateAppointment.execute(%{
+               "date" => date,
+               "provider_id" => provider.id,
+               "user_id" => user.id
+             })
 
     assert user.id == appointment.user_id
   end

@@ -1,5 +1,5 @@
 defmodule DoctorSchedule.Accounts.Services.ResetPasswordServiceTest do
-  use DoctorSchedule.DataCase
+  use DoctorSchedule.DataCase, async: true
 
   alias DoctorSchedule.Accounts.Repositories.TokenRepository
   alias DoctorSchedule.Accounts.Services.ResetPasswordService

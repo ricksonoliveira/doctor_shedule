@@ -1,5 +1,5 @@
 defmodule DoctorSchedule.Appointments.Repositories.AppointmentsTest do
-  use DoctorSchedule.DataCase
+  use DoctorSchedule.DataCase, async: true
 
   alias DoctorSchedule.Appointments.Entities.Appointment
 
