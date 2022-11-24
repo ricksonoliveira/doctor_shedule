@@ -59,7 +59,7 @@ defmodule DoctorSchedule.MixProject do
     [
       {:phoenix, "~> 1.6.6"},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.6"},
+      {:ecto_sql, "~> 3.7.2"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
@@ -77,10 +77,12 @@ defmodule DoctorSchedule.MixProject do
       {:sobelow, "~> 0.8", only: :dev},
       {:excoveralls, "~> 0.10", only: :test},
       {:argon2_elixir, "~> 3.0"},
-      {:guardian, "~> 2.0"},
+      {:guardian, "~> 2.2.3"},
       {:bamboo, "~> 1.5"},
       {:bamboo_smtp, "~> 3.0.0"},
-      {:mock, "~> 0.3.0", only: :test}
+      {:mock, "~> 0.3.0", only: :test},
+      {:mongodb, ">= 0.0.0"},
+      {:poolboy, ">= 0.0.0"}
     ]
   end
 

@@ -1,5 +1,6 @@
 defmodule DoctorSchedule.Appointments.Services.CreateAppointment do
   alias DoctorSchedule.Appointments.Repositories.AppointmentRepository
+  alias DoctorSchedule.Shared.Repositories.Notification
 
   def execute(appointment) do
     %{
@@ -26,10 +27,24 @@ defmodule DoctorSchedule.Appointments.Services.CreateAppointment do
         {:error, "This appointment is already booked."}
 
       true ->
-        appointment
+        {:ok, appointment} = appointment
         |> Map.put("date", date)
         |> AppointmentRepository.create_appointment()
+
+       send_notification(appointment)
+
+        {:ok, appointment}
     end
+  end
+
+  def send_notification(appointment), do:
+    %{
+      recepient_id: appointment.provider_id,
+      content: "New schedule to the Doctor in #{format_date(appointment.date)}"
+    } |> Notification.create()
+
+  defp format_date(date) do
+    "#{date.month}/#{date.day}/#{date.year} at #{date.hour}:#{date.minute}"
   end
 
   defp book_time?(date) do
