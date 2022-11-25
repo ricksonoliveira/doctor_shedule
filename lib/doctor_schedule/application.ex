@@ -7,8 +7,6 @@ defmodule DoctorSchedule.Application do
 
   @impl true
   def start(_type, _args) do
-    import Supervisor.Spec
-
     mongo_url = "mongodb://localhost:27017/doctor_schedule"
 
     children = [
@@ -20,7 +18,7 @@ defmodule DoctorSchedule.Application do
       {Phoenix.PubSub, name: DoctorSchedule.PubSub},
       # Start the Endpoint (http/https)
       DoctorScheduleWeb.Endpoint,
-      worker(Mongo, [[name: :mongo, url: mongo_url, pool_size: 10]])
+      {Mongo, [name: :mongo, url: mongo_url, pool_size: 10]}
       # Start a worker by calling: DoctorSchedule.Worker.start_link(arg)
       # {DoctorSchedule.Worker, arg}
     ]

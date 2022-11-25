@@ -81,7 +81,7 @@ defmodule DoctorSchedule.MixProject do
       {:bamboo, "~> 1.5"},
       {:bamboo_smtp, "~> 3.0.0"},
       {:mock, "~> 0.3.0", only: :test},
-      {:mongodb, ">= 0.0.0"},
+      {:mongodb, "~> 0.5.1"},
       {:poolboy, ">= 0.0.0"}
     ]
   end
