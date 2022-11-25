@@ -41,7 +41,7 @@ defmodule DoctorSchedule.Appointments.Services.CreateAppointment do
     %{
       recepient_id: appointment.provider_id,
       content: "New schedule to the Doctor in #{format_date(appointment.date)}"
-    } |> Notification.create() |> IO.inspect()
+    } |> Notification.create()
 
   defp format_date(date) do
     "#{date.month}/#{date.day}/#{date.year} at #{date.hour}:#{date.minute}"
