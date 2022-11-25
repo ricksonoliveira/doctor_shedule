@@ -31,7 +31,7 @@ defmodule DoctorSchedule.Appointments.Services.CreateAppointment do
         |> Map.put("date", date)
         |> AppointmentRepository.create_appointment()
 
-       send_notification(appointment)
+       Task.async(fn -> send_notification(appointment) end)
 
         {:ok, appointment}
     end
@@ -40,7 +40,7 @@ defmodule DoctorSchedule.Appointments.Services.CreateAppointment do
   def send_notification(appointment), do:
     %{
       recepient_id: appointment.provider_id,
-      content: "New schedule to the Doctor in #{format_date(appointment.date)}"
+      content: "New schedule to the Doctor #{appointment.provider.first_name} with patient #{appointment.user.first_name} in #{format_date(appointment.date)}"
     } |> Notification.create()
 
   defp format_date(date) do
