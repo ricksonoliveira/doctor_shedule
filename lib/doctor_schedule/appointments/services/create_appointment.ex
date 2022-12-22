@@ -27,21 +27,25 @@ defmodule DoctorSchedule.Appointments.Services.CreateAppointment do
         {:error, "This appointment is already booked."}
 
       true ->
-        {:ok, appointment} = appointment
-        |> Map.put("date", date)
-        |> AppointmentRepository.create_appointment()
+        {:ok, appointment} =
+          appointment
+          |> Map.put("date", date)
+          |> AppointmentRepository.create_appointment()
 
-       Task.async(fn -> send_notification(appointment) end)
+        Task.async(fn -> send_notification(appointment) end)
 
         {:ok, appointment}
     end
   end
 
-  def send_notification(appointment), do:
-    %{
-      recepient_id: appointment.provider_id,
-      content: "New schedule to the Doctor #{appointment.provider.first_name} with patient #{appointment.user.first_name} in #{format_date(appointment.date)}"
-    } |> Notification.create()
+  def send_notification(appointment),
+    do:
+      %{
+        recepient_id: appointment.provider_id,
+        content:
+          "New schedule to the Doctor #{appointment.provider.first_name} with patient #{appointment.user.first_name} in #{format_date(appointment.date)}"
+      }
+      |> Notification.create()
 
   defp format_date(date) do
     "#{date.month}/#{date.day}/#{date.year} at #{date.hour}:#{date.minute}"

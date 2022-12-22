@@ -22,6 +22,23 @@ defmodule DoctorSchedule.Accounts.Repositories.AccountRepository do
   end
 
   @doc """
+  Returns the list of users.
+
+  ## Examples
+
+      iex> list_users()
+      [%User{}, ...]
+
+  """
+  def list_providers do
+    query =
+      from u in User,
+        where: u.role == "admin"
+
+    Repo.all(query)
+  end
+
+  @doc """
   Gets a single user.
 
   Raises `Ecto.NoResultsError` if the User does not exist.

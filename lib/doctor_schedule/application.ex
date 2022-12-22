@@ -5,6 +5,8 @@ defmodule DoctorSchedule.Application do
 
   use Application
 
+  alias DoctorSchedule.Shared.Cache.Ets.CacheEts
+
   @impl true
   def start(_type, _args) do
     mongo_url = Application.get_env(:doctor_schedule, :mongo_db)[:url]
@@ -19,7 +21,8 @@ defmodule DoctorSchedule.Application do
       {Phoenix.PubSub, name: DoctorSchedule.PubSub},
       # Start the Endpoint (http/https)
       DoctorScheduleWeb.Endpoint,
-      {Mongo, [name: :mongo, url: mongo_url, pool_size: mongo_pool_size]}
+      {Mongo, [name: :mongo, url: mongo_url, pool_size: mongo_pool_size]},
+      CacheEts
       # Start a worker by calling: DoctorSchedule.Worker.start_link(arg)
       # {DoctorSchedule.Worker, arg}
     ]
