@@ -1,5 +1,6 @@
 defmodule DoctorSchedule.Appointments.Services.CreateAppointment do
   alias DoctorSchedule.Appointments.Repositories.AppointmentRepository
+  alias DoctorSchedule.Shared.Cache.Ets.Implementations.ScheduleCache
   alias DoctorSchedule.Shared.Repositories.Notification
 
   def execute(appointment) do
@@ -8,6 +9,13 @@ defmodule DoctorSchedule.Appointments.Services.CreateAppointment do
       "provider_id" => provider_id,
       "user_id" => user_id
     } = appointment
+
+    date_cache =
+      date
+      |> NaiveDateTime.from_iso8601!()
+      |> NaiveDateTime.to_date()
+
+    cache_key = "provider-schedules:#{provider_id}:#{date_cache}"
 
     date =
       date
@@ -32,6 +40,7 @@ defmodule DoctorSchedule.Appointments.Services.CreateAppointment do
           |> Map.put("date", date)
           |> AppointmentRepository.create_appointment()
 
+        ScheduleCache.delete(cache_key)
         Task.async(fn -> send_notification(appointment) end)
 
         {:ok, appointment}
