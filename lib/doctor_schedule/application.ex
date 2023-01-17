@@ -24,8 +24,7 @@ defmodule DoctorSchedule.Application do
       DoctorScheduleWeb.Endpoint,
       {Mongo, [name: :mongo, url: mongo_url, pool_size: mongo_pool_size]},
       {Redix, {redis_url, [name: :redis_server]}},
-      build_cache_ets(:providers),
-      build_cache_ets(:schedules)
+      build_cache_ets(:providers)
       # Start a worker by calling: DoctorSchedule.Worker.start_link(arg)
       # {DoctorSchedule.Worker, arg}
     ]

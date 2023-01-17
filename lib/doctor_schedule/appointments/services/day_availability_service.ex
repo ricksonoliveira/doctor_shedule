@@ -10,7 +10,7 @@ defmodule DoctorSchedule.Appointments.Services.DayAvailabilityService do
       {:ok, day_availability} ->
         day_availability
 
-      {:not_found, []} ->
+      {:not_found, _} ->
         appointments = ProviderRepository.all_day_from_provider(provider_id, date)
 
         schedule =
