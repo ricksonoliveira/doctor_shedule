@@ -28,5 +28,11 @@ config :doctor_schedule, DoctorSchedule.Mailer, adapter: Swoosh.Adapters.Test
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+config :doctor_schedule, :mongo_db,
+  url: "mongodb://localhost:27017/doctor_schedule",
+  pool_size: 10
+
+config :doctor_schedule, :redis_config, url: "redis://localhost:6379"
+
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
