@@ -9,8 +9,12 @@ services:
       - "8080:4000"
     depends_on:
       - db
+      - mongo
+      - redis-app
     links:
       - db
+    env_file:
+      - ./componse.env
     environment:
       HOST_DB: "db"
   db:
@@ -20,3 +24,13 @@ services:
       POSTGRES_USER: "postgres"
     ports:
       - "5432:5432"
+  mongo:
+    restart: always
+    image: mongo:latest
+    container_name: "mongodb"
+    environment:
+      - MONGO_INITDB_DATABASE=doctor_schedule
+  redis-app:
+    image: redis
+    ports:
+      - "6379:6379"
