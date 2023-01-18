@@ -22,7 +22,7 @@ defmodule DoctorSchedule.Appointments.Services.MonthAvailabilityServiceTest do
     create_appointment_list(provider.id, user.id)
 
     with_mocks [
-      {Date, [:passthrough], [utc_today: fn _ -> ~D[2022-10-11] end]}
+      {Date, [:passthrough], [utc_today: fn -> ~D[2022-10-11] end]}
     ] do
       day_available_hours = MonthAvailabilityService.execute(provider.id, 2022, 10)
 

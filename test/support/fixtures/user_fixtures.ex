@@ -16,7 +16,8 @@ defmodule DoctorSchedule.UserFixtures do
       first_name: "provider first_name",
       last_name: "provider last_name",
       password: "provider password",
-      password_confirmation: "provider password"
+      password_confirmation: "provider password",
+      role: "admin"
     }
 
   def update_user,

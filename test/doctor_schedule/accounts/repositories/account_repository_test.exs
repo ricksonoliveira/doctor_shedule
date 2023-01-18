@@ -2,6 +2,7 @@ defmodule DoctorSchedule.Accounts.Repositories.AccountRepositoryTest do
   use DoctorSchedule.DataCase, async: true
 
   alias DoctorSchedule.Accounts.Repositories.AccountRepository
+  alias DoctorSchedule.UserFixtures
 
   describe "users" do
     alias DoctorSchedule.Accounts.Entities.User
@@ -16,7 +17,7 @@ defmodule DoctorSchedule.Accounts.Repositories.AccountRepositoryTest do
     end
 
     test "list_providers/0 returns all providers" do
-      provider_fixture()
+      UserFixtures.create_provider()
       assert AccountRepository.list_providers() |> Enum.count() == 1
     end
 
