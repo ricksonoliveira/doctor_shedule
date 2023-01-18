@@ -7,6 +7,7 @@
     "lib/doctor_schedule_web/live/page_live.ex",
     "test/support/channel_case.ex",
     "test/support/appointments_fixture.ex",
+    "test/support/data_case.ex",
     "lib/doctor_schedule_web/telemetry.ex"
   ],
   "coverage_options": {

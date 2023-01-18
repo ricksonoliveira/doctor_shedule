@@ -23,4 +23,20 @@ defmodule DoctorSchedule.AccountsFixtures do
 
     user
   end
+
+  def provider_fixture(attrs \\ %{}) do
+    {:ok, provider} =
+      attrs
+      |> Enum.into(%{
+        email: "provider@email",
+        first_name: "provider first_name",
+        last_name: "provider last_name",
+        password: "123123",
+        password_confirmation: "123123",
+        role: "admin"
+      })
+      |> AccountRepository.create_user()
+
+    provider
+  end
 end

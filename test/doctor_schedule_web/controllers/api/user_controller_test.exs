@@ -13,15 +13,26 @@ defmodule DoctorScheduleWeb.Api.UserControllerTest do
   end
 
   setup %{conn: conn} do
-    {:ok, user} =
-      %{
-        email: "auth@email",
-        first_name: "some first_name",
-        last_name: "some last_name",
-        password: "some password",
-        password_confirmation: "some password"
-      }
-      |> AccountRepository.create_user()
+    assert {:ok, user} =
+             %{
+               email: "auth@email",
+               first_name: "some first_name",
+               last_name: "some last_name",
+               password: "some password",
+               password_confirmation: "some password"
+             }
+             |> AccountRepository.create_user()
+
+    assert {:ok, _user} =
+             %{
+               email: "provider@email",
+               first_name: "provider first_name",
+               last_name: "provider last_name",
+               password: "provider password",
+               password_confirmation: "provider password",
+               role: "admin"
+             }
+             |> AccountRepository.create_user()
 
     {:ok, token, _} = encode_and_sign(user, %{}, token_type: :access)
 
@@ -38,6 +49,14 @@ defmodule DoctorScheduleWeb.Api.UserControllerTest do
       conn =
         conn
         |> get(Routes.api_user_path(conn, :index))
+
+      assert json_response(conn, 200) |> Enum.count() == 2
+    end
+
+    test "lists all providers", %{conn: conn} do
+      conn =
+        conn
+        |> get(Routes.api_user_path(conn, :index), %{only_providers: 1})
 
       assert json_response(conn, 200) |> Enum.count() == 1
     end

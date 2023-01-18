@@ -15,6 +15,11 @@ defmodule DoctorSchedule.Accounts.Repositories.AccountRepositoryTest do
       assert AccountRepository.list_users() |> Enum.count() == 1
     end
 
+    test "list_providers/0 returns all providers" do
+      provider_fixture()
+      assert AccountRepository.list_providers() |> Enum.count() == 1
+    end
+
     test "get_user!/1 returns the user with given id" do
       user = user_fixture()
       assert AccountRepository.get_user!(user.id).email == user.email

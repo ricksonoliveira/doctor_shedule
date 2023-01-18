@@ -53,12 +53,16 @@ defmodule DoctorSchedule.Appointments.Repositories.AppointmentRepository do
 
   """
   def create_appointment(attrs \\ %{}) do
-    {:ok, appointment} =
-      %Appointment{}
-      |> Appointment.changeset(attrs)
-      |> Repo.insert()
+    %Appointment{}
+    |> Appointment.changeset(attrs)
+    |> Repo.insert()
+    |> case do
+      {:ok, appointment} ->
+        {:ok, appointment |> Repo.preload([:provider, :user])}
 
-    {:ok, appointment |> Repo.preload([:provider, :user])}
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:error, changeset}
+    end
   end
 
   @doc """

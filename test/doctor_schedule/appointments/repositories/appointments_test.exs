@@ -13,13 +13,15 @@ defmodule DoctorSchedule.Appointments.Repositories.AppointmentsTest do
     @invalid_attrs %{date: nil}
 
     test "list_appointments/0 returns all appointments" do
-      appointment = appointment_fixture()
-      assert AppointmentRepository.list_appointments() == [appointment]
+      appointment_fixture()
+      assert AppointmentRepository.list_appointments() |> Enum.count() == 1
     end
 
     test "get_appointment!/1 returns the appointment with given id" do
       appointment = appointment_fixture()
-      assert AppointmentRepository.get_appointment!(appointment.id) == appointment
+
+      assert AppointmentRepository.get_appointment!(appointment.id)
+             |> Repo.preload([:provider, :user]) == appointment
     end
 
     test "create_appointment/1 with valid data creates a appointment" do
@@ -59,7 +61,9 @@ defmodule DoctorSchedule.Appointments.Repositories.AppointmentsTest do
       assert {:error, %Ecto.Changeset{}} =
                AppointmentRepository.update_appointment(appointment, @invalid_attrs)
 
-      assert appointment == AppointmentRepository.get_appointment!(appointment.id)
+      assert appointment ==
+               AppointmentRepository.get_appointment!(appointment.id)
+               |> Repo.preload([:provider, :user])
     end
 
     test "delete_appointment/1 deletes the appointment" do
