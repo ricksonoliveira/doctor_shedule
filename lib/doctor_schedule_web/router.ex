@@ -22,6 +22,8 @@ defmodule DoctorScheduleWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+    get "/login", SessionController, :login
+    get "/signup", SessionController, :signup
   end
 
   scope "/api", DoctorScheduleWeb.Api, as: :api do
