@@ -20,14 +20,9 @@ jobs:
         env:
           cache-name: cache-elixir-deps
         with:
-          path: |
-            deps
-            _build
+          path: deps
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          restore-keys: ${{ runner.os }}-mix-
       - name: Linter
         run: mix credo --strict
 
@@ -48,14 +43,9 @@ jobs:
         env:
           cache-name: cache-elixir-deps
         with:
-          path: |
-            deps
-            _build
+          path: deps
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          restore-keys: ${{ runner.os }}-mix-
       - name: FORMAT
         run: mix format --check-formatted
 
@@ -76,14 +66,9 @@ jobs:
         env:
           cache-name: cache-elixir-deps
         with:
-          path: |
-            deps
-            _build
+          path: deps
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          restore-keys: ${{ runner.os }}-mix-
       - name: Security
         run: mix sobelow --config
 
@@ -104,14 +89,9 @@ jobs:
         env:
           cache-name: cache-elixir-deps
         with:
-          path: |
-            deps
-            _build
+          path: deps
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          restore-keys: ${{ runner.os }}-mix-
       - name: ==> 🔎 Integrating Tests
         run: mix coveralls.json
       - uses: codecov/codecov-action@v1
