@@ -62,7 +62,7 @@ jobs:
         with: ${{secrets.CODECOV_TOKEN}}
     services:
       pg:
-        image: postgres:latest
+        image: postgres:12
         ports: ['5432:5432']
         env:
           POSTGRES_PASSWORD: postgres
