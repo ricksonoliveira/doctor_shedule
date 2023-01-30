@@ -16,13 +16,18 @@ jobs:
           mix deps.get
       - name: Cache elixir deps
         id: cache-deps
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-elixir-deps
         with:
-          path: deps
+          path: |
+            deps
+            _build
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: ${{ runner.os }}-mix-
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-mix-
       - name: Linter
         run: mix credo --strict
 
@@ -39,13 +44,18 @@ jobs:
           mix deps.get
       - name: Cache elixir deps
         id: cache-deps
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-elixir-deps
         with:
-          path: deps
+          path: |
+            deps
+            _build
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: ${{ runner.os }}-mix-
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-mix-
       - name: FORMAT
         run: mix format --check-formatted
 
@@ -62,13 +72,18 @@ jobs:
           mix deps.get
       - name: Cache elixir deps
         id: cache-deps
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-elixir-deps
         with:
-          path: deps
+          path: |
+            deps
+            _build
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: ${{ runner.os }}-mix-
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-mix-
       - name: Security
         run: mix sobelow --config
 
@@ -85,13 +100,18 @@ jobs:
           mix deps.get
       - name: Cache elixir deps
         id: cache-deps
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-elixir-deps
         with:
-          path: deps
+          path: |
+            deps
+            _build
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: ${{ runner.os }}-mix-
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-mix-
       - name: ==> 🔎 Integrating Tests
         run: mix coveralls.json
       - uses: codecov/codecov-action@v1
