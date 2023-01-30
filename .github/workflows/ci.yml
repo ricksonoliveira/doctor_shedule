@@ -10,19 +10,13 @@ jobs:
       - uses: erlef/setup-elixir@885971a72ed1f9240973bd92ab57af8c1aa68f24
         with:
           otp-version: '23.0'
-          elixir-version: '1.10.0'
-      - uses: actions/cache@v2
-        env:
-          cache-name: cache-elixir-deps
+          elixir-version: '1.12.0'
+      - name: Restore dependencies cache
+        uses: actions/cache@v2
         with:
-          path: |
-            deps
-            _build
+          path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache.name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          restore-keys: ${{ runner.os }}-mix-
       - name: deps
         run: mix deps.get
       - name: Linter
@@ -36,18 +30,12 @@ jobs:
         with:
           otp-version: '23.0'
           elixir-version: '1.12.0'
-      - uses: actions/cache@v2
-        env:
-          cache-name: cache-elixir-deps
+      - name: Restore dependencies cache
+        uses: actions/cache@v2
         with:
-          path: |
-            deps
-            _build
+          path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache.name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          restore-keys: ${{ runner.os }}-mix-
       - name: deps
         run: mix deps.get
       - name: FORMAT
@@ -61,18 +49,12 @@ jobs:
         with:
           otp-version: '23.0'
           elixir-version: '1.12.0'
-      - uses: actions/cache@v2
-        env:
-          cache-name: cache-elixir-deps
+      - name: Restore dependencies cache
+        uses: actions/cache@v2
         with:
-          path: |
-            deps
-            _build
+          path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache.name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          restore-keys: ${{ runner.os }}-mix-
       - name: deps
         run: mix deps.get
       - name: Security
@@ -86,18 +68,12 @@ jobs:
         with:
           otp-version: '23.0'
           elixir-version: '1.12.0'
-      - uses: actions/cache@v2
-        env:
-          cache-name: cache-elixir-deps
+      - name: Restore dependencies cache
+        uses: actions/cache@v2
         with:
-          path: |
-            deps
-            _build
+          path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache.name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          restore-keys: ${{ runner.os }}-mix-
       - name: ==> 🔎 Integrating Tests
         run: mix coveralls.json
       - uses: codecov/codecov-action@v1
