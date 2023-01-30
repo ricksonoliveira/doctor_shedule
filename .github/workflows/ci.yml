@@ -5,120 +5,104 @@ on: pull_request
 jobs:
   lint:
     runs-on: ubuntu-latest
-    container:
-      image: elixir:1.12
+    strategy:
+      matrix:
+        elixir: [1.12]
+        otp: [24]
     steps:
       - uses: actions/checkout@v2
-      - name: Install Deps
-        run: |
-          mix local.rebar --force
-          mix local.hex --force
-          mix deps.get
-      - name: Cache elixir deps
-        id: cache-deps
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-elixir-deps
+      - uses: erlef/setup-elixir@v1
         with:
-          path: |
-            deps
-            _build
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-mix-
+          elixir-version ${{ matrix.elixir }}
+          otp-version ${{ matrix.otp }}
+      - uses: actions/cache@v3
+        id: mix-cache-lint
+        with:
+          path: deps
+          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+      - name: Install Deps
+        if: steps.mix-cache-lint.outputs.cache-hit != 'true'
+        run: mix deps.get
       - name: Linter
         run: mix credo --strict
 
   check_format:
     runs-on: ubuntu-latest
-    container:
-      image: elixir:1.12
+    strategy:
+      matrix:
+        elixir: [1.12]
+        otp: [24]
     steps:
       - uses: actions/checkout@v2
-      - name: Install Deps
-        run: |
-          mix local.rebar --force
-          mix local.hex --force
-          mix deps.get
-      - name: Cache elixir deps
-        id: cache-deps
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-elixir-deps
+      - uses: erlef/setup-elixir@v1
         with:
-          path: |
-            deps
-            _build
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-mix-
+          elixir-version ${{ matrix.elixir }}
+          otp-version ${{ matrix.otp }}
+      - uses: actions/cache@v3
+        id: mix-cache-format
+        with:
+          path: deps
+          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+      - name: Install Deps
+        if: steps.mix-cache-format.outputs.cache-hit != 'true'
+        run: mix deps.get
       - name: FORMAT
         run: mix format --check-formatted
 
   security:
     runs-on: ubuntu-latest
-    container:
-      image: elixir:1.12
+    strategy:
+      matrix:
+        elixir: [1.12]
+        otp: [24]
     steps:
       - uses: actions/checkout@v2
-      - name: Install Deps
-        run: |
-          mix local.rebar --force
-          mix local.hex --force
-          mix deps.get
-      - name: Cache elixir deps
-        id: cache-deps
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-elixir-deps
+      - uses: erlef/setup-elixir@v1
         with:
-          path: |
-            deps
-            _build
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-mix-
+          elixir-version ${{ matrix.elixir }}
+          otp-version ${{ matrix.otp }}
+      - uses: actions/cache@v3
+        id: mix-cache-security
+        with:
+          path: deps
+          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+      - name: Install Deps
+        if: steps.mix-cache-security.outputs.cache-hit != 'true'
+        run: mix deps.get
       - name: Security
         run: mix sobelow --config
 
   tests:
     runs-on: ubuntu-latest
-    container:
-      image: elixir:1.12
+    strategy:
+      matrix:
+        elixir: [1.12]
+        otp: [24]
     steps:
       - uses: actions/checkout@v2
+      - uses: erlef/setup-elixir@v1
+        with:
+          elixir-version ${{ matrix.elixir }}
+          otp-version ${{ matrix.otp }}
+      - uses: actions/cache@v3
+        id: mix-cache-tests
+        with:
+          path: deps
+          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
       - name: Install Deps
+        if: steps.mix-cache-tests.outputs.cache-hit != 'true'
         run: |
           mix local.rebar --force
           mix local.hex --force
           mix deps.get
-      - name: Cache elixir deps
-        id: cache-deps
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-elixir-deps
-        with:
-          path: |
-            deps
-            _build
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/mix.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-mix-
+          mix ecto.create
       - name: ==> 🔎 Integrating Tests
         run: mix coveralls.json
       - uses: codecov/codecov-action@v1
         with: ${{secrets.CODECOV_TOKEN}}
     services:
       pg:
-        image: postgres:12
+        image: postgres:13
         ports: ['5432:5432']
         env:
           POSTGRES_PASSWORD: postgres
