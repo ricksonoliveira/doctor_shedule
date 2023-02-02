@@ -22,9 +22,12 @@ defmodule DoctorScheduleWeb.Api.ProviderDayAvailabilityControllerTest do
 
     with_mock Redix, command: fn _, _ -> {:ok, nil} end do
       conn =
-        get(conn, Routes.api_provider_day_availability_path(conn, :show, provider.id, "2022-01-01"))
+        get(
+          conn,
+          Routes.api_provider_day_availability_path(conn, :show, provider.id, "2022-01-01")
+        )
 
       assert length(json_response(conn, 200)) > 0
-      end
+    end
   end
 end

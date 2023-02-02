@@ -4,6 +4,7 @@ defmodule DoctorSchedule.Appointments.Services.DayAvailabilityServiceTest do
   import Mock
 
   alias DoctorSchedule.Shared.Cache.Ets.Implementations.ScheduleCache
+
   alias DoctorSchedule.{
     Appointments.Services.DayAvailabilityService,
     UserFixtures
@@ -14,7 +15,8 @@ defmodule DoctorSchedule.Appointments.Services.DayAvailabilityServiceTest do
 
     date = Date.utc_today()
     date = %Date{date | day: date.day - 1}
-    with_mock ScheduleCache, get: fn _ -> {:ok, [ %{available: false, hour: 8}]} end do
+
+    with_mock ScheduleCache, get: fn _ -> {:ok, [%{available: false, hour: 8}]} end do
       day_available_hours = DayAvailabilityService.execute(provider.id, date)
       cached_day_available_hours = DayAvailabilityService.execute(provider.id, date)
 
