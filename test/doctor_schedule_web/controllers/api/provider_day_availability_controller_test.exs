@@ -3,6 +3,7 @@ defmodule DoctorScheduleWeb.Api.ProviderDayAvailabilityControllerTest do
 
   import DoctorScheduleWeb.Auth.Guardian
   import DoctorSchedule.UserFixtures
+  import Mock
 
   setup %{conn: conn} do
     user = create_user()
@@ -19,9 +20,11 @@ defmodule DoctorScheduleWeb.Api.ProviderDayAvailabilityControllerTest do
   test "lists show all appointments of a day", %{conn: conn} do
     provider = create_provider()
 
-    conn =
-      get(conn, Routes.api_provider_day_availability_path(conn, :show, provider.id, "2022-01-01"))
+    with_mock Redix, command: fn _, _ -> {:ok, nil} end do
+      conn =
+        get(conn, Routes.api_provider_day_availability_path(conn, :show, provider.id, "2022-01-01"))
 
-    assert length(json_response(conn, 200)) > 0
+      assert length(json_response(conn, 200)) > 0
+      end
   end
 end
